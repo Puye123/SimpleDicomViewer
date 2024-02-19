@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SimpleDicomViewer (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "SimpleDicomViewer (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
