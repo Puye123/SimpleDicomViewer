@@ -9,7 +9,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.Tests
         public void プロパティへのアクセス確認()
         {
             // Arrange
-            Tag tag = new Tag(groupNumber: 0x1234, elementNumber: 0xabcd);
+            var tag = new Tag(groupNumber: 0x1234, elementNumber: 0xabcd);
             ushort expectedGroupNumber = 0x1234;
             ushort expectedElementNumber = 0xabcd;
 
@@ -29,8 +29,8 @@ namespace SimpleDicomViewer.Domain.ValueObjects.Tests
             ushort tag2GroupNumber, ushort tag2ElementNumber, bool expected)
         {
             // Arrange
-            Tag tag1 = new Tag(groupNumber: tag1GroupNumber, elementNumber: tag1ElementNumber);
-            Tag tag2 = new Tag(groupNumber: tag2GroupNumber, elementNumber: tag2ElementNumber);
+            var tag1 = new Tag(groupNumber: tag1GroupNumber, elementNumber: tag1ElementNumber);
+            var tag2 = new Tag(groupNumber: tag2GroupNumber, elementNumber: tag2ElementNumber);
 
             // Act
             bool isEqual = tag1.Equals(tag2);

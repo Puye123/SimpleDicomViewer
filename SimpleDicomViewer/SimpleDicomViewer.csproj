@@ -39,7 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\新しいフォルダー\" />
-    <Folder Include="Domain\Exceptions\" />
+    <Folder Include="Domain\Entities\" />
   </ItemGroup>
 
   <!-- 
