@@ -4,6 +4,12 @@ using System.Text.RegularExpressions;
 
 namespace SimpleDicomViewer.Domain.ValueObjects.VR
 {
+    /// <summary>
+    /// CS(Code String: コード列) : string
+    /// </summary>
+    /// <remarks>
+    /// 文字列であり，意味のない先頭または末尾のスペ－ス（20H）をもつことがある。 
+    /// </remarks>
     public class CodeStringValue : ValueElement
     {
         public CodeStringValue(Tag tag, byte[] value) : base(tag, value, length: 16, isFixedValue: false, valueType: typeof(string))
