@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SimpleDicomViewer.Domain.ValueObjects
+﻿namespace SimpleDicomViewer.Domain.ValueObjects
 {
     public class Tag : ValueObject<Tag>
     {
