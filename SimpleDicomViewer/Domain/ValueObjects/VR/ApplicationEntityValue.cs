@@ -4,7 +4,7 @@ using System;
 namespace SimpleDicomViewer.Domain.ValueObjects.VR
 {
     /// <summary>
-    /// AE(Application Entity: 応用エンティティ)
+    /// AE(Application Entity: 応用エンティティ) : string
     /// </summary>
     /// <remarks>
     /// 意味のない先頭と末尾のSPACE(20H)を持つ、応用エンティティを識別する文字列。

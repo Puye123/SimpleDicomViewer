@@ -5,15 +5,15 @@ using System.Text;
 namespace SimpleDicomViewer.Domain.ValueObjects.VR.Tests
 {
     [TestClass()]
-    public class AgeStringValueTests
+    public class CodeStringValueTests
     {
         [TestMethod()]
         public void 値の長さが正しく設定されているか()
         {
             // Arrange
-            var ae = new AgeStringValue(new Tag(0x1234, 0xabcd), new byte[] { 0x30, 0x31, 0x32, 0x4d });
-            ushort expectedLength = 4;
-            bool expectedIsFixedValue = true;
+            var ae = new CodeStringValue(new Tag(0x1234, 0xabcd), new byte[] { 0x30, 0x31, 0x32, 0x4d });
+            ushort expectedLength = 16;
+            bool expectedIsFixedValue = false;
 
             // Act
 
@@ -23,15 +23,15 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR.Tests
         }
 
         [TestMethod()]
-        [DataRow("012D")]
-        [DataRow("345W")]
-        [DataRow("678Y")]
-        [DataRow("901M")]
+        [DataRow("012ABC _")]
+        [DataRow("ABCDEFGHIJKIJKL")]
+        [DataRow("   ABCD    ")]
+        [DataRow("")]
         public void 正規文字列の場合(string input)
         {
             // Arrange
             var byteArray = Encoding.ASCII.GetBytes(input);
-            var ae = new AgeStringValue(new Tag(0x1234, 0xabcd), byteArray);
+            var ae = new CodeStringValue(new Tag(0x1234, 0xabcd), byteArray);
 
             // Act
             var result = ae.GetValueObject();
@@ -41,22 +41,19 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR.Tests
         }
 
         [TestMethod()]
-        [DataRow("012A")]
-        [DataRow("A45W")]
-        [DataRow("6A8Y")]
-        [DataRow("90AM")]
-        [DataRow("90M")]
-        [DataRow("1234M")]
+        [DataRow("012abc _")]
+        [DataRow("ABCDEFG*IJKIJKL")]
+        [DataRow("   ABCD+    ")]
         [ExpectedException(typeof(InvalidDICOMFormatException))]
         public void 不正文字列の場合(string input)
         {
             // Arrange
             var byteArray = Encoding.ASCII.GetBytes(input);
-            var ae = new AgeStringValue(new Tag(0x1234, 0xabcd), byteArray);
+            var ae = new CodeStringValue(new Tag(0x1234, 0xabcd), byteArray);
             // 不正な入力なので、↑のインスタンス生成時に例外が発生することを期待
 
             // Act
-           
+
             // Assert
         }
     }

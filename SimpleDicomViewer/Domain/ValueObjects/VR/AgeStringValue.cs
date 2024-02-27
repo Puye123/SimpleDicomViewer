@@ -4,6 +4,12 @@ using SimpleDicomViewer.Domain.Exceptions;
 
 namespace SimpleDicomViewer.Domain.ValueObjects.VR
 {
+    /// <summary>
+    /// AS(Age String: 年齢列) : string
+    /// </summary>
+    /// <remarks>
+    /// 次の書式の一つをもつ文字列 — nnnD, nnnW, nnnM, nnnY；ここで nnn は D に対しては日，W に対しては週，M に対しては月，Y に対しては年の数を含む。
+    /// </remarks>
     public class AgeStringValue : ValueElement
     {
         public AgeStringValue(Tag tag, byte[] value) : base(tag, value, length: 4, isFixedValue: true, valueType: typeof(string))
