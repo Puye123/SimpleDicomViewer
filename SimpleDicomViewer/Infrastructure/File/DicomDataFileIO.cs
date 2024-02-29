@@ -67,7 +67,7 @@ namespace SimpleDicomViewer.Infrastructure.File
             Console.WriteLine(length);
             // 値の読み込み
             byte[] value = binaryReader.ReadBytes((int)length);
-            Console.WriteLine(value);
+            Console.WriteLine(BitConverter.ToString(value));
 
             Console.WriteLine("================");
 
