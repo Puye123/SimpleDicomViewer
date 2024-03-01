@@ -51,6 +51,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             try
             {
                 bool result = IsValidValue(value);
+                // Todo: 値チェックは例外のみで行うか検討
                 if (result)
                 {
                     Value = value;
@@ -82,6 +83,14 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             if (ValueType == typeof(string))
             {
                 return System.Text.Encoding.ASCII.GetString(Value);
+            }
+            if (ValueType == typeof(float))
+            {
+                return BitConverter.ToSingle(Value);
+            }
+            if (ValueType == typeof(double))
+            {
+                return BitConverter.ToDouble(Value);
             }
             else
             {
