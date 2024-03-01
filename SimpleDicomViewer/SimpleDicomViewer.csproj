@@ -39,7 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\新しいフォルダー\" />
-    <Folder Include="Domain\Entities\" />
   </ItemGroup>
 
   <!-- 
