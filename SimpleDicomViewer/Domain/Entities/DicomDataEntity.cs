@@ -11,6 +11,8 @@ namespace SimpleDicomViewer.Domain.Entities
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public DicomDataEntity() { }
+        public DicomDataEntity(List<ValueElement> valueElements) {
+            this.Values = valueElements;
+        }
     }
 }

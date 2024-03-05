@@ -1,5 +1,6 @@
 ﻿using SimpleDicomViewer.Domain.Exceptions;
 using System;
+using System.Linq;
 
 namespace SimpleDicomViewer.Domain.ValueObjects.VR
 {
@@ -91,6 +92,33 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             if (ValueType == typeof(double))
             {
                 return BitConverter.ToDouble(Value);
+            }
+            if (ValueType == typeof(byte[]))
+            {
+                return Value;
+            }
+            if (ValueType == typeof(int))
+            {
+                return BitConverter.ToInt32(Value);
+            }
+            if (ValueType == typeof(short))
+            {
+                return BitConverter.ToInt16(Value);
+            }
+            if (ValueType == typeof(uint))
+            {
+                return BitConverter.ToUInt32(Value);
+            }
+            if (ValueType == typeof(ushort))
+            {
+                return BitConverter.ToUInt16(Value);
+            }
+            if (ValueType == typeof(Tag))
+            {
+                ushort group = BitConverter.ToUInt16(Value.Take(2).ToArray()); // 上位2バイト
+                ushort element = BitConverter.ToUInt16(Value.Skip(2).ToArray()); // 下位2バイト
+                Tag tag = new(group, element);
+                return tag;
             }
             else
             {
