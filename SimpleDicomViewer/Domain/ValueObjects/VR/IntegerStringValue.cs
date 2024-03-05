@@ -26,8 +26,8 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
                 string valueString = System.Text.Encoding.ASCII.GetString(value);
                 NumberStyles ns = NumberStyles.Integer;
                 IFormatProvider fmt = CultureInfo.InvariantCulture;
-                int val;
-                bool result = int.TryParse(valueString, ns, fmt, out val);
+
+                bool result = int.TryParse(valueString, ns, fmt, out int val);
                 if (result)
                 {
                     return true;

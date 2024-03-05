@@ -3,6 +3,7 @@ using SimpleDicomViewer.Domain.Repositories;
 using SimpleDicomViewer.Domain.ValueObjects;
 using SimpleDicomViewer.Domain.ValueObjects.VR;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -13,6 +14,14 @@ namespace SimpleDicomViewer.Infrastructure.File
     /// </summary>
     public class DicomDataFileIO : IDicomDataRepository
     {
+        public IValueElementFactory Factory { get; }
+        public DicomDataFileIO() {
+            Factory = new ValueElementFactory();
+        }
+        public DicomDataFileIO(IValueElementFactory factory)
+        {
+            this.Factory = factory;
+        }
         /// <summary>
         /// DICOMデータの読み込み
         /// </summary>
@@ -28,14 +37,18 @@ namespace SimpleDicomViewer.Infrastructure.File
 
                 // プレフィックス これは DICM なはず
                 string prefix = Encoding.ASCII.GetString(binaryReader.ReadBytes(4));
-                Console.WriteLine(prefix);
+                // Console.WriteLine(prefix);
 
                 // データの読み込み
+                List<ValueElement> valueElements = new List<ValueElement>();
                 while (binaryReader.BaseStream.Position < binaryReader.BaseStream.Length)
                 {
-                    ReadValueElement(binaryReader);
+                    var ve = ReadValueElement(binaryReader);
+                    valueElements.Add(ve);
                 }
-                return null;
+
+                DicomDataEntity dicomDataEntity = new DicomDataEntity(valueElements);
+                return dicomDataEntity;
             }
         }
 
@@ -44,12 +57,12 @@ namespace SimpleDicomViewer.Infrastructure.File
             // タグの読み込み
             ushort group = binaryReader.ReadUInt16();
             ushort element = binaryReader.ReadUInt16();
-            Console.WriteLine(group + ":" + element);
+            // Console.WriteLine(group + ":" + element);
             Tag tag = new Tag(group, element);
 
             // VR種別の読み込み
             string vr = Encoding.ASCII.GetString(binaryReader.ReadBytes(2));
-            Console.WriteLine(vr);
+            // Console.WriteLine(vr);
 
             // 長さの読み込み
             uint length;
@@ -64,16 +77,14 @@ namespace SimpleDicomViewer.Infrastructure.File
             {
                 length = binaryReader.ReadUInt16();
             }
-            Console.WriteLine(length);
+            // Console.WriteLine(length);
             // 値の読み込み
             byte[] value = binaryReader.ReadBytes((int)length);
-            Console.WriteLine(BitConverter.ToString(value));
+            // Console.WriteLine(BitConverter.ToString(value));
 
-            Console.WriteLine("================");
+            // Console.WriteLine("================");
 
-            // Todo: ドメインレイヤにファクトリクラスを作ってここでインスタンス正史江
-
-            return null;
+            return Factory.Create(vr, tag, value);
         }
 
         /// <summary>
