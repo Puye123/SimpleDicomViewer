@@ -15,7 +15,7 @@ namespace SimpleDicomViewer.Infrastructure.File.Tests
             var dicomData = dicomDataFileIO.Read("Infrastructure\\File\\US_LEE_IR6.dcm");
 
             foreach( var ve in dicomData.Values) {
-                Console.WriteLine($"{ve.GetType()} : {ve.GetValueObject().ToString()}");
+                Console.WriteLine($"{ve.Tag.ToString()} : {ve.GetType()} : {ve.GetValueObject().ToString()}");
             }
 
             Assert.Fail();

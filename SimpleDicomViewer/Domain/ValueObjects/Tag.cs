@@ -34,5 +34,10 @@
                 return false;
             }
         }
+
+        public override string ToString()
+        {
+            return $"({GroupNumber:X4}, {ElementNumber:X4})";
+        }
     }
 }
