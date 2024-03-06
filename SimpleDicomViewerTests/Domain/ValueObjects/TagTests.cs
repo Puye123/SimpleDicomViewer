@@ -12,12 +12,29 @@ namespace SimpleDicomViewer.Domain.ValueObjects.Tests
             var tag = new Tag(groupNumber: 0x1234, elementNumber: 0xabcd);
             ushort expectedGroupNumber = 0x1234;
             ushort expectedElementNumber = 0xabcd;
+            TagType expectedTagType = TagType.Standard;
 
             // Act
 
             // Assert
             Assert.AreEqual(expectedGroupNumber, tag.GroupNumber);
             Assert.AreEqual(expectedElementNumber, tag.ElementNumber);
+            Assert.AreEqual(expectedTagType, tag.TagType);
+
+            // ===================================
+
+            // Arrange
+            tag = new Tag(groupNumber: 0x1235, elementNumber: 0xabcd);
+            expectedGroupNumber = 0x1235;
+            expectedElementNumber = 0xabcd;
+            expectedTagType = TagType.Private;
+
+            // Act
+
+            // Assert
+            Assert.AreEqual(expectedGroupNumber, tag.GroupNumber);
+            Assert.AreEqual(expectedElementNumber, tag.ElementNumber);
+            Assert.AreEqual(expectedTagType, tag.TagType);
         }
 
         [TestMethod()]

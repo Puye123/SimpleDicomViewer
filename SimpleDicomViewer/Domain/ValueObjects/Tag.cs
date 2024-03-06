@@ -1,5 +1,11 @@
 ﻿namespace SimpleDicomViewer.Domain.ValueObjects
 {
+    public enum TagType
+    {
+        Standard = 0,
+        Private = 1
+    }
+
     public class Tag : ValueObject<Tag>
     {
         /// <summary>
@@ -13,6 +19,11 @@
         public ushort ElementNumber { get; }
 
         /// <summary>
+        /// タグの属性
+        /// </summary>
+        public TagType TagType { get; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="groupNumber">グループ番号</param>
@@ -21,6 +32,15 @@
         {
             GroupNumber = groupNumber;
             ElementNumber = elementNumber;
+
+            if (GroupNumber % 2 == 0)
+            {
+                TagType = TagType.Standard;
+            }
+            else
+            {
+                TagType = TagType.Private;
+            }
         }
 
         protected override bool EqualCore(Tag other)
