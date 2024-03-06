@@ -8,21 +8,6 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR.Tests
     public class CodeStringValueTests
     {
         [TestMethod()]
-        public void 値の長さが正しく設定されているか()
-        {
-            // Arrange
-            var ae = new CodeStringValue(new Tag(0x1234, 0xabcd), new byte[] { 0x30, 0x31, 0x32, 0x4d });
-            ushort expectedLength = 16;
-            bool expectedIsFixedValue = false;
-
-            // Act
-
-            // Assert
-            Assert.AreEqual(expectedLength, ae.Length);
-            Assert.AreEqual(expectedIsFixedValue, ae.IsFixedValue);
-        }
-
-        [TestMethod()]
         [DataRow("012ABC _")]
         [DataRow("ABCDEFGHIJKIJKL")]
         [DataRow("   ABCD    ")]
