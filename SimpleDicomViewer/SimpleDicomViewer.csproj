@@ -12,6 +12,9 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="Assets\lena.jpg" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -38,7 +41,12 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\新しいフォルダー\" />
+    <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\lena.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <!-- 
