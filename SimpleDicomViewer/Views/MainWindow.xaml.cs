@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using SimpleDicomViewer.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -26,6 +27,11 @@ namespace SimpleDicomViewer.Views
         public MainWindow()
         {
             this.InitializeComponent();
+            Handle = this;
         }
+
+        public MainWindowViewModel ViewModel { get; } = new MainWindowViewModel();
+
+        public static MainWindow Handle { get; private set; }
     }
 }
