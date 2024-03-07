@@ -33,6 +33,7 @@ namespace SimpleDicomViewer.ViewModels
             DialogMessage = dialogMessage;
         }
 
+        #region Commands
         [RelayCommand]
         private async Task AddFile()
         {
@@ -62,5 +63,6 @@ namespace SimpleDicomViewer.ViewModels
         {
             await DialogMessage.ShowDialogMessageAsync(MainWindow.Handle.Content.XamlRoot, "[未実装] このアプリについて", "test test");
         }
+        #endregion
     }
 }

@@ -15,7 +15,7 @@ namespace SimpleDicomViewer.Infrastructure.File.Tests
             // Act
             // テストデータはここからダウンロード
             // https://www.jira-net.or.jp/dicom/dicom_data_01_03.html 
-            var dicomData = dicomDataFileIO.Read("Infrastructure\\File\\US_LEE_IR6.dcm");
+            var dicomData = dicomDataFileIO.Read("TestData\\US_LEE_IR6.dcm");
 
             foreach( var ve in dicomData.Values) {
                 Console.WriteLine($"{ve.Tag.ToString()} : {ve.GetType()} : {ve.GetValueObject().ToString()}");
