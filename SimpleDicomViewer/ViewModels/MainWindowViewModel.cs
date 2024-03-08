@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace SimpleDicomViewer.ViewModels
         /// </summary>
         IFilePickerService FilePickerService { get; }
 
+        public ObservableCollection<DicomListElement> DicomListElements { get; private set; }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -30,6 +33,8 @@ namespace SimpleDicomViewer.ViewModels
         {
             DialogMessage = dialogMessage;
             FilePickerService = filePickerService;
+
+            DicomListElements = new ObservableCollection<DicomListElement>();
         }
 
         #region Commands
@@ -37,6 +42,18 @@ namespace SimpleDicomViewer.ViewModels
         private async Task AddFile()
         {
             var filePath = await FilePickerService.FilePickAsync();
+            try
+            {
+                var fileIO = new Infrastructure.File.DicomDataFileIO();
+                var dicomData = fileIO.Read(filePath);
+
+                DicomListElements.Add(new DicomListElement(dicomData));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             await DialogMessage.ShowDialogMessageAsync("[未実装] ファイルの追加", filePath);
         }
 
