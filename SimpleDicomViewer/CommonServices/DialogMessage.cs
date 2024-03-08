@@ -1,16 +1,18 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SimpleDicomViewer.CommonServices
 {
-    internal class DialogMessage : IDialogMessage
+    internal class DialogMessage : IDialogMessageService
     {
-        public async Task ShowDialogMessageAsync(XamlRoot root, string title, string content)
+        private readonly Window _windowHandle;
+
+        public DialogMessage(Window windowHandle) {
+            _windowHandle = windowHandle;
+        }
+        public async Task ShowDialogMessageAsync(string title, string content)
         {
             ContentDialog myDialog = new ContentDialog
             {
@@ -19,7 +21,7 @@ namespace SimpleDicomViewer.CommonServices
                 CloseButtonText = "OK"
             };
 
-            myDialog.XamlRoot = root;
+            myDialog.XamlRoot = _windowHandle.Content.XamlRoot;
             ContentDialogResult result = await myDialog.ShowAsync();
         }
     }

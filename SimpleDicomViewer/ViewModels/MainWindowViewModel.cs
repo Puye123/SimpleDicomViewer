@@ -15,53 +15,54 @@ namespace SimpleDicomViewer.ViewModels
         /// <summary>
         /// ダイアログボックス表示クラス
         /// </summary>
-        IDialogMessage DialogMessage { get; }
+        IDialogMessageService DialogMessage { get; }
 
         /// <summary>
-        /// コンストラクタ
+        /// ファイルピッカー表示クラス
         /// </summary>
-        public MainWindowViewModel() {
-            DialogMessage = new DialogMessage();
-        }
+        IFilePickerService FilePickerService { get; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="dialogMessage">ダイアログボックス表示クラス</param>
-        public MainWindowViewModel(IDialogMessage dialogMessage)
+        public MainWindowViewModel(IDialogMessageService dialogMessage, IFilePickerService filePickerService)
         {
             DialogMessage = dialogMessage;
+            FilePickerService = filePickerService;
         }
 
         #region Commands
         [RelayCommand]
         private async Task AddFile()
         {
-            await DialogMessage.ShowDialogMessageAsync(MainWindow.Handle.Content.XamlRoot, "[未実装] ファイルの追加", "test test");
+            var filePath = await FilePickerService.FilePickAsync();
+            await DialogMessage.ShowDialogMessageAsync("[未実装] ファイルの追加", filePath);
         }
 
         [RelayCommand]
         private async Task AddFolder()
         {
-            await DialogMessage.ShowDialogMessageAsync(MainWindow.Handle.Content.XamlRoot, "[未実装] フォルダの追加", "test test");
+            var folderPath = await FilePickerService.FolderPickAsync();
+            await DialogMessage.ShowDialogMessageAsync("[未実装] フォルダの追加", folderPath);
         }
 
         [RelayCommand]
         private async Task Save()
         {
-            await DialogMessage.ShowDialogMessageAsync(MainWindow.Handle.Content.XamlRoot, "[未実装] DICOMデータの保存", "test test");
+            await DialogMessage.ShowDialogMessageAsync("[未実装] DICOMデータの保存", "test test");
         }
 
         [RelayCommand]
         private async Task Exit()
         {
-            await DialogMessage.ShowDialogMessageAsync(MainWindow.Handle.Content.XamlRoot, "[未実装] アプリの終了", "test test");
+            await DialogMessage.ShowDialogMessageAsync("[未実装] アプリの終了", "test test");
         }
 
         [RelayCommand]
         private async Task Help()
         {
-            await DialogMessage.ShowDialogMessageAsync(MainWindow.Handle.Content.XamlRoot, "[未実装] このアプリについて", "test test");
+            await DialogMessage.ShowDialogMessageAsync("[未実装] このアプリについて", "test test");
         }
         #endregion
     }
