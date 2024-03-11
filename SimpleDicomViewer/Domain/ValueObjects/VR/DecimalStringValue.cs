@@ -1,5 +1,6 @@
 ﻿using SimpleDicomViewer.Domain.Exceptions;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
@@ -27,18 +28,28 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             try
             {
                 string valueString = System.Text.Encoding.ASCII.GetString(value);
-                NumberStyles ns = NumberStyles.AllowExponent | NumberStyles.Float | NumberStyles.Integer;
-                IFormatProvider fmt = CultureInfo.InvariantCulture;
-
-                bool result = double.TryParse(valueString, ns, fmt, out double val);
-                if (result)
+                
+                // 空文字は許容する (身長・体重など、入力されていない場合が存在する)
+                if (string.IsNullOrEmpty(valueString) )
                 {
                     return true;
                 }
-                else
+
+                NumberStyles ns = NumberStyles.AllowExponent | NumberStyles.Float | NumberStyles.Integer;
+                IFormatProvider fmt = CultureInfo.InvariantCulture;
+
+                // 値複雑度が2以上に対応
+                var valueStringArray = valueString.Split("\\");
+                foreach ( var v in valueStringArray)
                 {
-                    throw new InvalidDICOMFormatException($"設定可能な値は10進数を表す文字列です。設定しようとした値は{valueString}です。");
+                    bool result = double.TryParse(v, ns, fmt, out double val);
+                    if (!result)
+                    {
+                        throw new InvalidDICOMFormatException($"設定可能な値は10進数を表す文字列です。設定しようとした値は{valueString}です。");
+                    }
                 }
+
+                return true;
             }
             catch (System.Exception ex)
             {
