@@ -36,7 +36,7 @@ namespace SimpleDicomViewer.ViewModels
         /// <summary>
         /// Domainエンティティを保持しておく
         /// </summary>
-        DicomDataEntity DicomDataEntity { get; }
+        public DicomDataEntity DicomDataEntity { get; }
 
         /// <summary>
         /// コンストラクタ

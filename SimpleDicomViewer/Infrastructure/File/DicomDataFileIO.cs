@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace SimpleDicomViewer.Infrastructure.File
@@ -66,12 +67,16 @@ namespace SimpleDicomViewer.Infrastructure.File
 
             if (group == 0xFFFE)
             {
-                return null;
+                return new UnknownValue(tag, Array.Empty<byte>());
             }
 
             // VR種別の読み込み
             string vr = Encoding.ASCII.GetString(binaryReader.ReadBytes(2));
             Debug.WriteLine(vr);
+            if (vr == "SQ")
+            {
+                Factory.Create(vr, tag, Array.Empty<byte>());
+            }
 
             // 長さの読み込み
             int length;
@@ -92,7 +97,14 @@ namespace SimpleDicomViewer.Infrastructure.File
             if (length > 0)
             {
                 value = binaryReader.ReadBytes((int)length);
-                Debug.WriteLine(BitConverter.ToString(value));
+                if (value.Length < 30) {
+                    Debug.WriteLine(BitConverter.ToString(value));
+                }
+                else
+                {
+                    Debug.WriteLine(BitConverter.ToString(value.Take(30).ToArray()));
+                }
+               
             }
             else
             {

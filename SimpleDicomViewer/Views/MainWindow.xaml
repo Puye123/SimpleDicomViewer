@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:vm="using:SimpleDicomViewer.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
     <Grid>
@@ -36,7 +37,8 @@
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="1,0,1,1" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
-            <ListView SelectionMode="Single" ItemsSource="{x:Bind ViewModel.DicomListElements}" >
+            <ListView SelectionMode="Single" ItemsSource="{x:Bind ViewModel.DicomListElements}"
+                      SelectedItem="{x:Bind ViewModel.SelectedDicomListElement, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="vm:DicomListElement">
                         <Grid>
@@ -66,12 +68,27 @@
                                     x:Phase="1"
                                     Style="{ThemeResource BaseTextBlockStyle}"
                                     Margin="12,6,0,0"/>
-                            <TextBlock  Grid.Column="1"
-                                    Grid.Row="1"
+                            <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
+                                <TextBlock
+                                    Text="Study ID = "
+                                    Style="{ThemeResource BodyTextBlockStyle}"
+                                    Margin="12,0,0,6"/>
+                                <TextBlock
                                     Text="{x:Bind StudyId}"
                                     x:Phase="2"
                                     Style="{ThemeResource BodyTextBlockStyle}"
                                     Margin="12,0,0,6"/>
+                                <TextBlock
+                                    Text="   Series Number = "
+                                    Style="{ThemeResource BodyTextBlockStyle}"
+                                    Margin="12,0,0,6"/>
+                                <TextBlock
+                                    Text="{x:Bind SeriesNumber}"
+                                    x:Phase="2"
+                                    Style="{ThemeResource BodyTextBlockStyle}"
+                                    Margin="12,0,0,6"/>
+                            </StackPanel>
+                            
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -83,13 +100,7 @@
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="0,1,1,1" Grid.Row="2" Grid.Column="1">
-            <ListView x:Name="Tags"  >
-                <x:String>Sample : タグ一覧画面</x:String>
-                <x:String>Sample</x:String>
-                <x:String>Sample</x:String>
-                <x:String>Sample</x:String>
-                <x:String>Sample</x:String>
-            </ListView>
+            <controls:DataGrid ItemsSource="{x:Bind ViewModel.TagListElements }" />
         </Border>
     </Grid>
 </Window>
