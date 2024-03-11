@@ -67,8 +67,6 @@ namespace SimpleDicomViewer.ViewModels
             {
                 Console.WriteLine(ex.Message);
             }
-
-            await DialogMessage.ShowDialogMessageAsync("[未実装] ファイルの追加", filePath);
         }
 
         [RelayCommand]
