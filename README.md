@@ -23,6 +23,7 @@ https://github.com/Puye123/SimpleDicomViewer/assets/32557553/4783a140-d4ed-43a0-
 * DICOMデータのファイル出力 (json)
 * ``.NET8`` 対応
 * 日本語対応
+* 画像処理機能
 
 # License
 ``SimpleDicomViewwer`` is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
