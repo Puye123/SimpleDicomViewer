@@ -81,6 +81,10 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
         /// <returns></returns>
         public object GetValueObject()
         {
+            if (Value == null || Value.Length == 0)
+            {
+                return "";
+            }
             if (ValueType == typeof(string))
             {
                 return System.Text.Encoding.ASCII.GetString(Value);

@@ -25,6 +25,19 @@ namespace SimpleDicomViewer.ViewModels
 
         public ObservableCollection<DicomListElement> DicomListElements { get; private set; }
 
+        public ObservableCollection<TagListElement> TagListElements { get; private set; }
+
+        private DicomListElement _selectedDicomListElement;
+        public DicomListElement SelectedDicomListElement
+        {
+            get => _selectedDicomListElement;
+            set
+            {
+                SetProperty(ref _selectedDicomListElement, value);
+                UpdateTagList();
+            }
+        }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -35,6 +48,7 @@ namespace SimpleDicomViewer.ViewModels
             FilePickerService = filePickerService;
 
             DicomListElements = new ObservableCollection<DicomListElement>();
+            TagListElements = new ObservableCollection<TagListElement>();
         }
 
         #region Commands
@@ -80,6 +94,16 @@ namespace SimpleDicomViewer.ViewModels
         private async Task Help()
         {
             await DialogMessage.ShowDialogMessageAsync("[未実装] このアプリについて", "test test");
+        }
+
+        [RelayCommand]
+        private void UpdateTagList()
+        {
+            TagListElements.Clear();
+            foreach (var ve in SelectedDicomListElement.DicomDataEntity.Values)
+            {
+                TagListElements.Add(new TagListElement(ve));
+            }
         }
         #endregion
     }
