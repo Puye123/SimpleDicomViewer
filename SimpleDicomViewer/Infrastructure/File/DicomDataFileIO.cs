@@ -4,6 +4,7 @@ using SimpleDicomViewer.Domain.ValueObjects;
 using SimpleDicomViewer.Domain.ValueObjects.VR;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -44,7 +45,10 @@ namespace SimpleDicomViewer.Infrastructure.File
                 while (binaryReader.BaseStream.Position < binaryReader.BaseStream.Length)
                 {
                     var ve = ReadValueElement(binaryReader);
-                    valueElements.Add(ve);
+                    if (ve != null)
+                    {
+                        valueElements.Add(ve);
+                    }   
                 }
 
                 DicomDataEntity dicomDataEntity = new DicomDataEntity(valueElements);
@@ -57,32 +61,44 @@ namespace SimpleDicomViewer.Infrastructure.File
             // タグの読み込み
             ushort group = binaryReader.ReadUInt16();
             ushort element = binaryReader.ReadUInt16();
-            // Console.WriteLine(group + ":" + element);
             Tag tag = new Tag(group, element);
+            Debug.WriteLine(tag.ToString());
+
+            if (group == 0xFFFE)
+            {
+                return null;
+            }
 
             // VR種別の読み込み
             string vr = Encoding.ASCII.GetString(binaryReader.ReadBytes(2));
-            // Console.WriteLine(vr);
+            Debug.WriteLine(vr);
 
             // 長さの読み込み
-            uint length;
+            int length;
             if (vr == "OB" || vr == "OW" || vr == "OF" || vr == "SQ" || vr == "UT" || vr == "UN")
             {
                 // 4バイトの予約領域を読み飛ばす
                 binaryReader.ReadUInt16();
                 // 4バイトの長さを読み込む
-                length = binaryReader.ReadUInt32();
+                length = binaryReader.ReadInt32();
             }
             else
             {
-                length = binaryReader.ReadUInt16();
+                length = binaryReader.ReadInt16();
             }
-            // Console.WriteLine(length);
+            Debug.WriteLine(length);
             // 値の読み込み
-            byte[] value = binaryReader.ReadBytes((int)length);
-            // Console.WriteLine(BitConverter.ToString(value));
-
-            // Console.WriteLine("================");
+            byte[] value;
+            if (length > 0)
+            {
+                value = binaryReader.ReadBytes((int)length);
+                Debug.WriteLine(BitConverter.ToString(value));
+            }
+            else
+            {
+                value = new byte[0];
+            }
+            Debug.WriteLine("================");
 
             return Factory.Create(vr, tag, value);
         }
