@@ -1,4 +1,4 @@
-# SimpleDicomViewwer
+# SimpleDicomViewer
 DICOMビュワーアプリです。  
 ``WinUI 3``, ``.Net6`` を採用しています。
 
