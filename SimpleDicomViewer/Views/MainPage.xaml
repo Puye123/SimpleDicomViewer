@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Window
-    x:Class="SimpleDicomViewer.Views.MainWindow"
+<Page
+    x:Class="SimpleDicomViewer.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:SimpleDicomViewer.Views"
     xmlns:vm="using:SimpleDicomViewer.ViewModels"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-    mc:Ignorable="d">
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <vm:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter"/>
+    </Page.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -38,7 +44,7 @@
 
         <Border BorderBrush="Black" BorderThickness="1,0,1,1" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
             <ListView SelectionMode="Single" ItemsSource="{x:Bind ViewModel.DicomListElements}"
-                      SelectedItem="{x:Bind ViewModel.SelectedDicomListElement, Mode=TwoWay}">
+                  SelectedItem="{x:Bind ViewModel.SelectedDicomListElement, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="vm:DicomListElement">
                         <Grid>
@@ -51,44 +57,44 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
                             <Ellipse x:Name="Ellipse"
-                                    Grid.RowSpan="2"
-                                    Width ="32"
-                                    Height="32"
-                                    Margin="6"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
+                                Grid.RowSpan="2"
+                                Width ="32"
+                                Height="32"
+                                Margin="6"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Fill="{ThemeResource SystemControlBackgroundBaseLowBrush}"/>
                             <TextBlock Grid.RowSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                    Text="{x:Bind Modality}"
-                                    x:Phase="1"
-                                    Style="{ThemeResource BaseTextBlockStyle}"
-                                       />
+                                Text="{x:Bind Modality}"
+                                x:Phase="1"
+                                Style="{ThemeResource BaseTextBlockStyle}"
+                                   />
                             <TextBlock Grid.Column="1"
-                                    Text="{x:Bind PatientName}"
-                                    x:Phase="1"
-                                    Style="{ThemeResource BaseTextBlockStyle}"
-                                    Margin="12,6,0,0"/>
+                                Text="{x:Bind PatientName}"
+                                x:Phase="1"
+                                Style="{ThemeResource BaseTextBlockStyle}"
+                                Margin="12,6,0,0"/>
                             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                                 <TextBlock
-                                    Text="Study ID = "
-                                    Style="{ThemeResource BodyTextBlockStyle}"
-                                    Margin="12,0,0,6"/>
+                                Text="Study ID = "
+                                Style="{ThemeResource BodyTextBlockStyle}"
+                                Margin="12,0,0,6"/>
                                 <TextBlock
-                                    Text="{x:Bind StudyId}"
-                                    x:Phase="2"
-                                    Style="{ThemeResource BodyTextBlockStyle}"
-                                    Margin="12,0,0,6"/>
+                                Text="{x:Bind StudyId}"
+                                x:Phase="2"
+                                Style="{ThemeResource BodyTextBlockStyle}"
+                                Margin="12,0,0,6"/>
                                 <TextBlock
-                                    Text="   Series Number = "
-                                    Style="{ThemeResource BodyTextBlockStyle}"
-                                    Margin="12,0,0,6"/>
+                                Text="   Series Number = "
+                                Style="{ThemeResource BodyTextBlockStyle}"
+                                Margin="12,0,0,6"/>
                                 <TextBlock
-                                    Text="{x:Bind SeriesNumber}"
-                                    x:Phase="2"
-                                    Style="{ThemeResource BodyTextBlockStyle}"
-                                    Margin="12,0,0,6"/>
+                                Text="{x:Bind SeriesNumber}"
+                                x:Phase="2"
+                                Style="{ThemeResource BodyTextBlockStyle}"
+                                Margin="12,0,0,6"/>
                             </StackPanel>
-                            
+
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -96,11 +102,11 @@
 
         </Border>
         <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.Row="1" Grid.Column="1">
-            <Image Source="/Assets/lena.jpg"/>
+            <Image Source="{x:Bind Path=ViewModel.ShowFilePath, Mode=OneWay, FallbackValue='/Assets/lena.jpg'}"/>
         </Border>
 
         <Border BorderBrush="Black" BorderThickness="0,1,1,1" Grid.Row="2" Grid.Column="1">
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.TagListElements }" />
         </Border>
     </Grid>
-</Window>
+</Page>
