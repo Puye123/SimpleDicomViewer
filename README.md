@@ -14,6 +14,7 @@ https://github.com/Puye123/SimpleDicomViewer/assets/32557553/4783a140-d4ed-43a0-
 * DICOMファイル(.dcm etc)の読み込み
 * 読み込んだDICOMデータの一覧表示
 * 選択したDICOMデータのタグ一覧表示
+* 画像データの表示（非圧縮）
 ## Not Implemented
 * フォルダ単位でのDICOMデータ読み込み
 * 画像データの表示 (ランレングス圧縮)
