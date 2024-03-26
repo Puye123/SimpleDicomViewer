@@ -7,10 +7,10 @@ namespace SimpleDicomViewer.CommonServices
 {
     internal class DialogMessage : IDialogMessageService
     {
-        private readonly Window _windowHandle;
+        private readonly Page _Handle;
 
-        public DialogMessage(Window windowHandle) {
-            _windowHandle = windowHandle;
+        public DialogMessage(Page handle) {
+            _Handle = handle;
         }
         public async Task ShowDialogMessageAsync(string title, string content)
         {
@@ -21,7 +21,7 @@ namespace SimpleDicomViewer.CommonServices
                 CloseButtonText = "OK"
             };
 
-            myDialog.XamlRoot = _windowHandle.Content.XamlRoot;
+            myDialog.XamlRoot = _Handle.Content.XamlRoot;
             ContentDialogResult result = await myDialog.ShowAsync();
         }
     }

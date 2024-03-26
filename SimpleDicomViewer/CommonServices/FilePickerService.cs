@@ -1,4 +1,5 @@
 ﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -8,9 +9,9 @@ namespace SimpleDicomViewer.CommonServices
 {
     public class FilePickerService : IFilePickerService
     {
-        private readonly Window _windowHandle;
-        public FilePickerService(Window windowHandle) {
-            _windowHandle = windowHandle;
+        private readonly Page _Handle;
+        public FilePickerService(Page windowHandle) {
+            _Handle = windowHandle;
         }
 
         public async Task<string?> FilePickAsync()
@@ -19,7 +20,7 @@ namespace SimpleDicomViewer.CommonServices
             var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
 
             // Retrieve the window handle (HWND) of the current WinUI 3 window.
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(_windowHandle);
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.Window);
 
             // Initialize the file picker with the window handle (HWND).
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
@@ -39,7 +40,7 @@ namespace SimpleDicomViewer.CommonServices
             FolderPicker openPicker = new Windows.Storage.Pickers.FolderPicker();
 
             // Retrieve the window handle (HWND) of the current WinUI 3 window.
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(_windowHandle);
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(App.Window);
 
             // Initialize the folder picker with the window handle (HWND).
             WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hWnd);
