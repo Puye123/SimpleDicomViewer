@@ -3,8 +3,11 @@ DICOMビュワーアプリです。
 ``WinUI 3``, ``.NET6`` を採用しています。
 
 # DEMO
-※ 2024/03/11 時点のものです  
+※ 2024/03/26 時点のものです  
+https://github.com/Puye123/SimpleDicomViewer/assets/32557553/c9b825a8-e392-4350-8149-3b1f61ba8cf1
 
+## Old
+※ 2024/03/11 時点のものです  
 https://github.com/Puye123/SimpleDicomViewer/assets/32557553/4783a140-d4ed-43a0-af45-a7bb2c847f6f
 
 # Feature
