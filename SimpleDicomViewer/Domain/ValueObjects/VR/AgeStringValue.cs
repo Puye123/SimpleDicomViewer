@@ -12,7 +12,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class AgeStringValue : ValueElement
     {
-        public AgeStringValue(Tag tag, byte[] value) : base(tag, value, length: 4, isFixedValue: true, valueType: typeof(string))
+        public AgeStringValue(Tag tag, byte[] value) : base("AS", tag, value, length: 4, isFixedValue: true, valueType: typeof(string))
         {
         }
 

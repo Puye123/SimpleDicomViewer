@@ -4,7 +4,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
 {
     public class AttributeTagValue : ValueElement
     {
-        public AttributeTagValue(Tag tag, byte[] value) : base(tag, value, length: 4, isFixedValue: true, valueType: typeof(Tag))
+        public AttributeTagValue(Tag tag, byte[] value) : base("AT", tag, value, length: 4, isFixedValue: true, valueType: typeof(Tag))
         {
         }
 

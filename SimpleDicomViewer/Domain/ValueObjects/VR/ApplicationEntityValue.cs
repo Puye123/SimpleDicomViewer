@@ -12,7 +12,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class ApplicationEntityValue : ValueElement
     {
-        public ApplicationEntityValue(Tag tag, byte[] value) : base(tag, value, length: 16, isFixedValue: false, valueType: typeof(string))
+        public ApplicationEntityValue(Tag tag, byte[] value) : base("AE", tag, value, length: 16, isFixedValue: false, valueType: typeof(string))
         {
         }
 

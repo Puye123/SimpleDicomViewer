@@ -11,7 +11,7 @@
     /// </remarks>
     public class PersonNameValue : ValueElement
     {
-        public PersonNameValue(Tag tag, byte[] value) : base(tag, value, length: uint.MaxValue, isFixedValue: false, valueType: typeof(string))
+        public PersonNameValue(Tag tag, byte[] value) : base("PN", tag, value, length: uint.MaxValue, isFixedValue: false, valueType: typeof(string))
         {
         }
 

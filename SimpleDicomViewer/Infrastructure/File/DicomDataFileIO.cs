@@ -1,4 +1,5 @@
 ﻿using SimpleDicomViewer.Domain.Entities;
+using SimpleDicomViewer.Domain.Exceptions;
 using SimpleDicomViewer.Domain.Repositories;
 using SimpleDicomViewer.Domain.ValueObjects;
 using SimpleDicomViewer.Domain.ValueObjects.VR;
@@ -39,6 +40,10 @@ namespace SimpleDicomViewer.Infrastructure.File
 
                 // プレフィックス これは DICM なはず
                 string prefix = Encoding.ASCII.GetString(binaryReader.ReadBytes(4));
+                if (prefix != "DICM")
+                {
+                    throw new InvalidDICOMFormatException("DICOMファイルではありません");
+                }
                 // Console.WriteLine(prefix);
 
                 // データの読み込み
@@ -65,9 +70,36 @@ namespace SimpleDicomViewer.Infrastructure.File
             Tag tag = new Tag(group, element);
             Debug.WriteLine(tag.ToString());
 
+            // Group Length(旧仕様) 対応
+            if (element == 0x0000) {
+                var _ = binaryReader.ReadInt32();
+                byte[] groupLength = binaryReader.ReadBytes(4); // Group Lengthタグは4バイトのアイテム長さフィールドを持つ
+                Debug.WriteLine($"Group Length {BitConverter.ToUInt32(groupLength)}");
+                return new GroupLengthValue(tag, groupLength);
+            }
+
+            // SQ関連のアイテム/シーケンス区切り処理等
             if (group == 0xFFFE)
             {
-                return new UnknownValue(tag, Array.Empty<byte>());
+                if (element == 0xE000)
+                {
+                    int _ = binaryReader.ReadInt32(); // アイテムタグは4バイトのアイテム長さフィールドを持つので空読みする。
+                    return new SequenceDelimitationItemValue("Item", tag);
+                }
+                else if (element == 0xE00D)
+                {
+                    int _ = binaryReader.ReadInt32(); // アイテムタグは4バイトのアイテム長さフィールドを持つので空読みする。
+                    return new SequenceDelimitationItemValue("Item Delimitation Item", tag);
+                }
+                else if (element == 0xE0DD)
+                {
+                    int _ = binaryReader.ReadInt32(); // アイテムタグは4バイトのアイテム長さフィールドを持つので空読みする。
+                    return new SequenceDelimitationItemValue("Sequence Delimitation Item", tag);
+                }
+                else
+                {
+                    throw new InvalidDICOMFormatException($"存在しないタグです {tag}");
+                }
             }
 
             // VR種別の読み込み

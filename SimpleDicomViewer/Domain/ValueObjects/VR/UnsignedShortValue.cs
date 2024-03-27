@@ -11,7 +11,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class UnsignedShortValue : ValueElement
     {
-        public UnsignedShortValue(Tag tag, byte[] value) : base(tag, value, length: 2, isFixedValue: true, valueType: typeof(ushort))
+        public UnsignedShortValue(Tag tag, byte[] value) : base("US", tag, value, length: 2, isFixedValue: true, valueType: typeof(ushort))
         {
         }
 

@@ -8,7 +8,7 @@
     /// </remarks>
     public class UnknownValue : ValueElement
     {
-        public UnknownValue(Tag tag, byte[] value) : base(tag, value, length: uint.MaxValue, isFixedValue: false, valueType: typeof(string))
+        public UnknownValue(Tag tag, byte[] value) : base("UN", tag, value, length: uint.MaxValue, isFixedValue: false, valueType: typeof(string))
         {
         }
 

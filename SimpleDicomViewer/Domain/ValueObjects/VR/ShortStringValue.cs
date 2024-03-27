@@ -10,7 +10,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class ShortStringValue : ValueElement
     {
-        public ShortStringValue(Tag tag, byte[] value) : base(tag, value, length: 16, isFixedValue: false, valueType: typeof(string))
+        public ShortStringValue(Tag tag, byte[] value) : base("SH", tag, value, length: 16, isFixedValue: false, valueType: typeof(string))
         {
         }
 

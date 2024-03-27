@@ -14,7 +14,7 @@
     /// </remarks>
     public class OtherWordStringValue : ValueElement
     {
-        public OtherWordStringValue(Tag tag, byte[] value) : base(tag, value, length: uint.MaxValue, isFixedValue: false, valueType: typeof(byte[]))
+        public OtherWordStringValue(Tag tag, byte[] value) : base("OW", tag, value, length: uint.MaxValue, isFixedValue: false, valueType: typeof(byte[]))
         {
         }
 

@@ -11,7 +11,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class SignedShortValue : ValueElement
     {
-        public SignedShortValue(Tag tag, byte[] value) : base(tag, value, length: 2, isFixedValue: true, valueType: typeof(short))
+        public SignedShortValue(Tag tag, byte[] value) : base("SS", tag, value, length: 2, isFixedValue: true, valueType: typeof(short))
         {
         }
 

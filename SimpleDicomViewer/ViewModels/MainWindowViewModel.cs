@@ -108,7 +108,7 @@ namespace SimpleDicomViewer.ViewModels
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _ = DialogMessage.ShowDialogMessageAsync("Error", ex.Message);
             }
         }
 
