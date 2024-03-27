@@ -54,6 +54,20 @@ namespace SimpleDicomViewer.Domain.Services.ImageConverter
             return bitmapImage;
         }
 
+        /// <summary>
+        /// Byte配列が表す画像をファイルに保存する
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <param name="imageArray"></param>
+        /// <param name="height"></param>
+        /// <param name="width"></param>
+        /// <param name="bit"></param>
+        /// <param name="photometricInterpretation"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// 要リファクタ
+        /// </remarks>
+        /// <exception cref="UnsupportImageFormatException"></exception>
         public string Save(string filepath, byte[] imageArray, int height, int width, int bit, PhotometricInterpretation photometricInterpretation)
         {
             if (bit == 8)
@@ -82,11 +96,11 @@ namespace SimpleDicomViewer.Domain.Services.ImageConverter
                     }
                 }
             }
-            else if (bit == 16)
+            else if (bit > 8 && bit <= 16)
             {
                 if (photometricInterpretation.Name == PhotometricInterpretationName.RGB)
                 {
-                    var pixels = Byte16toUshort16(imageArray);
+                    var pixels = ByteXXtoUshort16(bit, imageArray);
                     pixels = RRGGBBtoRGBRGB<ushort>(pixels).ToArray();
                     using (Mat image = new Mat(height, width, MatType.CV_16UC3, pixels))
                     {
@@ -95,7 +109,7 @@ namespace SimpleDicomViewer.Domain.Services.ImageConverter
                 }
                 else if (photometricInterpretation.Name == PhotometricInterpretationName.MONOCHROME1)
                 {
-                    var pixels = Byte16toUshort16(imageArray);
+                    var pixels = ByteXXtoUshort16(bit, imageArray);
                     using (Mat image = new Mat(height, width, MatType.CV_16UC1, pixels))
                     {
                         image.SaveImage(filepath);
@@ -103,35 +117,7 @@ namespace SimpleDicomViewer.Domain.Services.ImageConverter
                 }
                 else if (photometricInterpretation.Name == PhotometricInterpretationName.MONOCHROME2)
                 {
-                    var pixels = Byte16toUshort16(imageArray);
-                    using (Mat image = new Mat(height, width, MatType.CV_16UC1, pixels))
-                    {
-                        image.SaveImage(filepath);
-                    }
-                }
-            }
-            else if (bit == 12)
-            {
-                if (photometricInterpretation.Name == PhotometricInterpretationName.RGB)
-                {
-                    var pixels = Byte12toUshort16(imageArray);
-                    pixels = RRGGBBtoRGBRGB<ushort>(pixels).ToArray();
-                    using (Mat image = new Mat(height, width, MatType.CV_16UC3, pixels))
-                    {
-                        image.SaveImage(filepath);
-                    }
-                }
-                else if (photometricInterpretation.Name == PhotometricInterpretationName.MONOCHROME1)
-                {
-                    var pixels = Byte12toUshort16(imageArray);
-                    using (Mat image = new Mat(height, width, MatType.CV_16UC1, pixels))
-                    {
-                        image.SaveImage(filepath);
-                    }
-                }
-                else if (photometricInterpretation.Name == PhotometricInterpretationName.MONOCHROME2)
-                {
-                    var pixels = Byte12toUshort16(imageArray);
+                    var pixels = ByteXXtoUshort16(bit, imageArray);
                     using (Mat image = new Mat(height, width, MatType.CV_16UC1, pixels))
                     {
                         image.SaveImage(filepath);
@@ -159,25 +145,14 @@ namespace SimpleDicomViewer.Domain.Services.ImageConverter
             return pixels;
         }
 
-        private ushort[] Byte12toUshort16(byte[] input)
+        private ushort[] ByteXXtoUshort16(int bit, byte[] input)
         {
+            if (bit <= 8 || bit > 16) { throw new ArgumentException(nameof(bit)); }
             ushort[] output = new ushort[input.Length / 2];
 
             for (int i = 0; i < output.Length; i++)
             {
-                output[i] = (ushort)((ushort)((input[i * 2 + 1] << 8) | input[i * 2]) << 4);
-            }
-
-            return output;
-        }
-
-        private ushort[] Byte16toUshort16(byte[] input)
-        {
-            ushort[] output = new ushort[input.Length / 2];
-
-            for (int i = 0; i < output.Length; i ++)
-            {
-                output[i] = (ushort)(ushort)(input[i*2 + 1] << 8 | input[i*2]);
+                output[i] = (ushort)((ushort)((input[i * 2 + 1] << 8) | input[i * 2]) << (16 - bit));
             }
 
             return output;

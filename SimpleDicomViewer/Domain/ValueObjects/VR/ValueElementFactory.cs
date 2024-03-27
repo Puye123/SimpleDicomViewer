@@ -47,7 +47,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
                 "UN" => new UnknownValue(tag, value),
                 "US" => new UnsignedShortValue(tag, value),
                 "UT" => new UNlimitedTextValue(tag, value),
-                _ => throw new InvalidDICOMFormatException($"{vrString}というタグは存在しません"),
+                _ => throw new InvalidDICOMFormatException($"読み込みに失敗しました。暗黙的VRを含むデータには対応していません。タグ:  {vrString.ToString()}"),
             };
         }
     }
