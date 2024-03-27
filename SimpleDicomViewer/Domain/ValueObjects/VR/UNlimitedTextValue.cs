@@ -8,7 +8,7 @@
     /// </remarks>
     public class UNlimitedTextValue : ValueElement
     {
-        public UNlimitedTextValue(Tag tag, byte[] value) : base(tag, value, length: uint.MaxValue - 2, isFixedValue: false, valueType: typeof(string))
+        public UNlimitedTextValue(Tag tag, byte[] value) : base("UT", tag, value, length: uint.MaxValue - 2, isFixedValue: false, valueType: typeof(string))
         {
         }
 

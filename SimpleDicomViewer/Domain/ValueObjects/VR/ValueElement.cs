@@ -31,6 +31,8 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
         /// </summary>
         public Type ValueType { get; }
 
+        public string VRName { get; }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -40,8 +42,9 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
         /// <param name="isFixedValue"></param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        protected ValueElement(Tag tag, byte[] value, uint length, bool isFixedValue, Type valueType)
+        protected ValueElement(string vr, Tag tag, byte[] value, uint length, bool isFixedValue, Type valueType)
         {
+            VRName = vr;
             Length = length;
             IsFixedValue = isFixedValue;
             Tag = tag ?? throw new ArgumentNullException(nameof(tag));
@@ -51,6 +54,14 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
 
             try
             {
+                // ワークアラウンド
+                // 多重値(バックスラッシュ)は値チェックしない
+                if (Array.Exists(value, x => x == 0x5c))
+                {
+                    Value = value;
+                    return;
+                }
+
                 bool result = IsValidValue(value);
                 // Todo: 値チェックは例外のみで行うか検討
                 if (result)
@@ -128,6 +139,11 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public override string ToString()
+        {
+            return VRName;
         }
     }
 }

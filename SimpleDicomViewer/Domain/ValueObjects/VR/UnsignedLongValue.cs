@@ -11,7 +11,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     internal class UnsignedLongValue : ValueElement
     {
-        public UnsignedLongValue(Tag tag, byte[] value) : base(tag, value, length: 4, isFixedValue: true, valueType: typeof(uint))
+        public UnsignedLongValue(Tag tag, byte[] value) : base("UL", tag, value, length: 4, isFixedValue: true, valueType: typeof(uint))
         {
         }
 

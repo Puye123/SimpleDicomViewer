@@ -8,7 +8,7 @@
     /// </remarks>
     public class OtherByteStringValue : ValueElement
     {
-        public OtherByteStringValue(Tag tag, byte[] value) : base(tag, value, length : 1024, isFixedValue: false, valueType: typeof(byte[]))
+        public OtherByteStringValue(Tag tag, byte[] value) : base("OB", tag, value, length : 1024, isFixedValue: false, valueType: typeof(byte[]))
         {
         }
 

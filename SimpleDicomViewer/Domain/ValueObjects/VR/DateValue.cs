@@ -14,7 +14,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class DateValue : ValueElement
     {
-        public DateValue(Tag tag, byte[] value) : base(tag, value, length: 8, isFixedValue: true, valueType: typeof(string))
+        public DateValue(Tag tag, byte[] value) : base("DA", tag, value, length: 8, isFixedValue: true, valueType: typeof(string))
         {
         }
 

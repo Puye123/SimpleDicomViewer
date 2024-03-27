@@ -9,7 +9,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </summary>
     public class IntegerStringValue : ValueElement
     {
-        public IntegerStringValue(Tag tag, byte[] value) : base(tag, value, length: 12, isFixedValue: false, valueType: typeof(string))
+        public IntegerStringValue(Tag tag, byte[] value) : base("IS", tag, value, length: 12, isFixedValue: false, valueType: typeof(string))
         {
         }
 

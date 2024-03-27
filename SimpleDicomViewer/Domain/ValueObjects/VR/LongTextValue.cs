@@ -10,7 +10,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class LongTextValue : ValueElement
     {
-        public LongTextValue(Tag tag, byte[] value) : base(tag, value, length: 10240, isFixedValue: false, valueType: typeof(string))
+        public LongTextValue(Tag tag, byte[] value) : base("LT", tag, value, length: 10240, isFixedValue: false, valueType: typeof(string))
         {
         }
 

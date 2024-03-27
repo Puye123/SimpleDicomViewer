@@ -17,7 +17,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class DecimalStringValue : ValueElement
     {
-        public DecimalStringValue(Tag tag, byte[] value) : base(tag, value, length: 16, isFixedValue: false, valueType: typeof(string))
+        public DecimalStringValue(Tag tag, byte[] value) : base("DS", tag, value, length: 16, isFixedValue: false, valueType: typeof(string))
         {
         }
 

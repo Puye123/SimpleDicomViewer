@@ -10,7 +10,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class UniqueIdentifierValue : ValueElement
     {
-        public UniqueIdentifierValue(Tag tag, byte[] value) : base(tag, value, length: 64, isFixedValue: true, valueType: typeof(string))
+        public UniqueIdentifierValue(Tag tag, byte[] value) : base("UI", tag, value, length: 64, isFixedValue: true, valueType: typeof(string))
         {
         }
 

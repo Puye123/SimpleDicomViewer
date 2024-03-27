@@ -12,7 +12,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class CodeStringValue : ValueElement
     {
-        public CodeStringValue(Tag tag, byte[] value) : base(tag, value, length: 16*100, isFixedValue: false, valueType: typeof(string))
+        public CodeStringValue(Tag tag, byte[] value) : base("CS", tag, value, length: 16*100, isFixedValue: false, valueType: typeof(string))
         {
         }
 

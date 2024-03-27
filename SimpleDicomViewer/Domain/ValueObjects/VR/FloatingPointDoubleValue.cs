@@ -11,7 +11,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class FloatingPointDoubleValue : ValueElement
     {
-        public FloatingPointDoubleValue(Tag tag, byte[] value) : base(tag, value, length: 8, isFixedValue: true, valueType: typeof(double))
+        public FloatingPointDoubleValue(Tag tag, byte[] value) : base("FD", tag, value, length: 8, isFixedValue: true, valueType: typeof(double))
         {
         }
 

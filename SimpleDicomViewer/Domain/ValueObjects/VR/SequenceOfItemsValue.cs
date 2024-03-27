@@ -10,7 +10,7 @@
     /// </remarks>
     public class SequenceOfItemsValue : ValueElement
     {
-        public SequenceOfItemsValue(Tag tag, byte[] value) : base(tag, value, length: uint.MaxValue, isFixedValue: false, valueType: typeof(string))
+        public SequenceOfItemsValue(Tag tag, byte[] value) : base("SQ", tag, value, length: uint.MaxValue, isFixedValue: false, valueType: typeof(string))
         {
         }
 

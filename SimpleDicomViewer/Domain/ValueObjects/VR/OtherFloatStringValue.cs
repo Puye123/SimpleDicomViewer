@@ -12,7 +12,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class OtherFloatStringValue : ValueElement
     {
-        public OtherFloatStringValue(Tag tag, byte[] value) : base(tag, value, length: (uint)Math.Pow(2, 32) - 4, isFixedValue: false, valueType: typeof(float))
+        public OtherFloatStringValue(Tag tag, byte[] value) : base("OF", tag, value, length: (uint)Math.Pow(2, 32) - 4, isFixedValue: false, valueType: typeof(float))
         {
         }
 

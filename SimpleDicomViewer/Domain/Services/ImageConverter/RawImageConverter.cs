@@ -10,7 +10,6 @@ using OpenCvSharp;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using static OpenCvSharp.LineIterator;
 
 namespace SimpleDicomViewer.Domain.Services.ImageConverter
 {

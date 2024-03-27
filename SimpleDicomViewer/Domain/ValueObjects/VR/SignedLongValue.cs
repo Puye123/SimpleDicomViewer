@@ -11,7 +11,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class SignedLongValue : ValueElement
     {
-        public SignedLongValue(Tag tag, byte[] value) : base(tag, value, length: 4, isFixedValue: true, valueType: typeof(int))
+        public SignedLongValue(Tag tag, byte[] value) : base("SL", tag, value, length: 4, isFixedValue: true, valueType: typeof(int))
         {
         }
 

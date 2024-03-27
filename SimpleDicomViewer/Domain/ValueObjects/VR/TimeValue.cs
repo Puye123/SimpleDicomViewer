@@ -10,7 +10,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class TimeValue : ValueElement
     {
-        public TimeValue(Tag tag, byte[] value) : base(tag, value, length: 16, isFixedValue: false, valueType: typeof(string))
+        public TimeValue(Tag tag, byte[] value) : base("TM", tag, value, length: 16, isFixedValue: false, valueType: typeof(string))
         {
         }
 
