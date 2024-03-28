@@ -84,7 +84,22 @@ namespace Domain_Repositories {
 
 }
 namespace Domain_Services_ImageConverter {
-  class d
+  class IImageConverterFactory{
+    <<interface>>
+    CreateImageConverter()
+  }
+  class ImageConverterFactory{
+    CreateImageConverter()
+  }
+  class IImageConverter {
+    <<interface>>
+    Convert()
+    Save()
+  }
+  class RawImageConverter {
+    Convert()
+    Save()
+  }
 }
 namespace Domain_ValueObjects {
   class ValueObject{
@@ -93,7 +108,42 @@ namespace Domain_ValueObjects {
   class Tag
   class PhotometricInterpretation
   class TransferSyntax
+
+
+
+  class ValueElement{
+  <<abstract>>
+  }
+  class AgeStringValue
+  class ApplicationEntityValue
+  class AttributeTagValue
+  class CodeStringValue
+  class DateTimeValue
+
+  class IValueElementFactory{
+    <<interface>>
+    Create()
+  }
+  class ValueElementFactory{
+    Create()
+  }
 }
+
+namespace Infrastructure_File {
+ class DicomDataFileIO {
+    Read()
+    Write()
+ }
+
+}
+
+IDicomDataRepository <|.. DicomDataFileIO
+
+IImageConverterFactory <|.. ImageConverterFactory
+IImageConverter <|.. RawImageConverter
+IImageConverterFactory --> IImageConverter : create
+
+　IValueElementFactory　　<|.. ValueElementFactory
 
 　IDialogMessageService　　<|.. DialogMessageService
 　IFilePickerService　　<|.. FilePickerService
@@ -102,11 +152,29 @@ ValueObject <|-- Tag
 ValueObject <|-- PhotometricInterpretation
 ValueObject <|-- TransferSyntax
 
+ValueElement <|-- AgeStringValue
+ValueElement <|-- ApplicationEntityValue
+ValueElement <|-- AttributeTagValue
+ValueElement <|-- CodeStringValue
+ValueElement <|-- DateTimeValue
+
+ValueElement "1" *-- "1" Tag
+
+IValueElementFactory　--> ValueElement : create
+
+DicomDataEntity "1" o-- "*" ValueElement
+DicomDataEntity "1" o-- "1" PhotometricInterpretation
+DicomDataEntity "1" o-- "1" TransferSyntax
+
+
 MainPage -- MainWindowViewModel : Link(Data Binding)
 
 MainWindowViewModel *-- IDialogMessageService
 MainWindowViewModel *-- IFilePickerService
 MainWindowViewModel "1" o-- "*" DicomDataEntity
+MainWindowViewModel --> IDicomDataRepository
+MainWindowViewModel --> IImageConverterFactory
+MainWindowViewModel --> IImageConverter
 MainWindowViewModel --> IDicomDataRepository
 ```
 
