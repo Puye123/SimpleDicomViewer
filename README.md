@@ -52,14 +52,62 @@ namespace CommonServices {
 　　　　　　　　ShowDialogMessageAsync()
 　　}
 
+　　class DialogMessageService{
+　　　　　　　　ShowDialogMessageAsync()
+　　}
+
+
  class IFilePickerService{
    <<interface>>
 　　　　　　　　FilePickAsync()
     FolderPickAsync()
   }
+ class FilePickerService{
+　　　　　　　　FilePickAsync()
+    FolderPickAsync()
+  }　　
 }
 
+namespace Domain_Entities {
+ class  DicomDataEntity
+}
+namespace Domain_Exceptions{
+  class InvalidDICOMFormatException
+  class UnsupportImageFormatException
+}
+namespace Domain_Repositories {
+  class IDicomDataRepository{
+    <<interface>>
+    Read()
+    Write()
+  }
+
+}
+namespace Domain_Services_ImageConverter {
+  class d
+}
+namespace Domain_ValueObjects {
+  class ValueObject{
+  <<abstract>>
+  }
+  class Tag
+  class PhotometricInterpretation
+  class TransferSyntax
+}
+
+　IDialogMessageService　　<|.. DialogMessageService
+　IFilePickerService　　<|.. FilePickerService
+
+ValueObject <|-- Tag
+ValueObject <|-- PhotometricInterpretation
+ValueObject <|-- TransferSyntax
+
 MainPage -- MainWindowViewModel : Link(Data Binding)
+
+MainWindowViewModel *-- IDialogMessageService
+MainWindowViewModel *-- IFilePickerService
+MainWindowViewModel "1" o-- "*" DicomDataEntity
+MainWindowViewModel --> IDicomDataRepository
 ```
 
 # License
