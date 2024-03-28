@@ -36,6 +36,9 @@ https://github.com/Puye123/SimpleDicomViewer/assets/32557553/4783a140-d4ed-43a0-
 
 一部抜粋版です
 
+> [!NOTE]
+> 現状はViewModelが直接Domain層にアクセスしているが、ViewModelが肥大化した場合はApplication層を新たに設けてFacade的な処理をViewModelから移譲させる。
+
 ```mermaid
 classDiagram
 namespace Views {
