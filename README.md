@@ -32,5 +32,35 @@ https://github.com/Puye123/SimpleDicomViewer/assets/32557553/4783a140-d4ed-43a0-
 * 日本語対応
 * 画像処理機能
 
+# Class Diagram
+
+一部抜粋版です
+
+```mermaid
+classDiagram
+namespace Views {
+  class MainPage
+}
+
+namespace ViewModels {
+  class MainWindowViewModel
+}
+
+namespace CommonServices {
+　　class IDialogMessageService{
+    <<interface>>
+　　　　　　　　ShowDialogMessageAsync()
+　　}
+
+ class IFilePickerService{
+   <<interface>>
+　　　　　　　　FilePickAsync()
+    FolderPickAsync()
+  }
+}
+
+MainPage -- MainWindowViewModel : Link(Data Binding)
+```
+
 # License
 ``SimpleDicomViewwer`` is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
