@@ -140,6 +140,16 @@ namespace Infrastructure_File {
 
 }
 
+
+
+MainWindowViewModel *-- IDialogMessageService
+MainWindowViewModel *-- IFilePickerService
+MainWindowViewModel "1" o-- "*" DicomDataEntity
+MainWindowViewModel --> IDicomDataRepository
+MainWindowViewModel --> IImageConverterFactory
+MainWindowViewModel --> IImageConverter
+MainWindowViewModel --> IDicomDataRepository
+
 IDicomDataRepository <|.. DicomDataFileIO
 
 IImageConverterFactory <|.. ImageConverterFactory
@@ -172,13 +182,6 @@ DicomDataEntity "1" o-- "1" TransferSyntax
 
 MainPage -- MainWindowViewModel : Link(Data Binding)
 
-MainWindowViewModel *-- IDialogMessageService
-MainWindowViewModel *-- IFilePickerService
-MainWindowViewModel "1" o-- "*" DicomDataEntity
-MainWindowViewModel --> IDicomDataRepository
-MainWindowViewModel --> IImageConverterFactory
-MainWindowViewModel --> IImageConverter
-MainWindowViewModel --> IDicomDataRepository
 ```
 
 # License
