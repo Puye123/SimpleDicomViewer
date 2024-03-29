@@ -2,7 +2,7 @@
 DICOMビュワーアプリです。  
 ``WinUI 3``, ``.NET6`` を採用しています。
 
-> [!NOTE]
+> [!WARNING]
 > このDICOMビュワーは医療用ではありません。
 
 # DEMO
