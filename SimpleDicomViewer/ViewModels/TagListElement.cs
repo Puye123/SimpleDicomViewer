@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using SimpleDicomViewer.Domain.StaticValues;
 using SimpleDicomViewer.Domain.ValueObjects.VR;
 
 namespace SimpleDicomViewer.ViewModels
@@ -23,7 +24,9 @@ namespace SimpleDicomViewer.ViewModels
         {
             this.ValueElement = valueElement;
             tag = valueElement.Tag.ToString();
-            name = "Not Implemented";
+            var dict = TagDictionary.GetInstance();
+            var tagInfo = dict.Search(valueElement.Tag);
+            name = tagInfo.Description;
             length = valueElement.Value?.Length;
             data = valueElement.GetValueObject().ToString();
         }

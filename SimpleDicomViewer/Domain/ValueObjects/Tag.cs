@@ -59,5 +59,10 @@
         {
             return $"({GroupNumber:X4}, {ElementNumber:X4})";
         }
+
+        public override int GetHashCode()
+        {
+            return (int)GroupNumber << 16 + (int)ElementNumber;
+        }
     }
 }
