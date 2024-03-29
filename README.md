@@ -3,10 +3,14 @@ DICOMビュワーアプリです。
 ``WinUI 3``, ``.NET6`` を採用しています。
 
 # DEMO
+※ 2024/03/29 時点のものです
+
+https://github.com/Puye123/SimpleDicomViewer/assets/32557553/25e1abb5-d06d-4aba-8b93-78a48185a1cd
+
+## Old
 ※ 2024/03/27 時点のものです  
 https://github.com/Puye123/SimpleDicomViewer/assets/32557553/880c5583-9f72-44b4-b9c5-d3c578c84cf8
 
-## Old
 ※ 2024/03/26 時点のものです  
 https://github.com/Puye123/SimpleDicomViewer/assets/32557553/c9b825a8-e392-4350-8149-3b1f61ba8cf1
 
@@ -18,13 +22,14 @@ https://github.com/Puye123/SimpleDicomViewer/assets/32557553/4783a140-d4ed-43a0-
 * 読み込んだDICOMデータの一覧表示
 * 選択したDICOMデータのタグ一覧表示
 * 画像データの表示（非圧縮）
+* DICOM辞書の実装およびタグ名の表示
+
 ## Not Implemented
 * フォルダ単位でのDICOMデータ読み込み
 * 画像データの表示 (ランレングス圧縮)
 * 画像データの表示 (JPEG圧縮)
 * 画像の保存機能 (BMP)
 * 画像の保存機能 (JPEG)
-* DICOM辞書の実装およびタグ名の表示
 * アプリアイコン
 * DICOMデータのファイル出力 (txt)
 * DICOMデータのファイル出力 (json)
