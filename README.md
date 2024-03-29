@@ -52,6 +52,8 @@ namespace Views {
 
 namespace ViewModels {
   class MainWindowViewModel
+  class DicomListElement
+  class TagListElement
 }
 
 namespace CommonServices {
@@ -114,6 +116,7 @@ namespace Domain_ValueObjects {
   <<abstract>>
   }
   class Tag
+  class TagInfo
   class PhotometricInterpretation
   class TransferSyntax
 
@@ -137,6 +140,15 @@ namespace Domain_ValueObjects {
   }
 }
 
+namespace Domain_StaticValues {
+  class TagDictionary {
+  <<singleton>>
+   -TagDictionary _instance
+   -Dictionary<Tag, TagInfo> _dict
+   +Search(Tag)
+  }
+}
+
 namespace Infrastructure_File {
  class DicomDataFileIO {
     Read()
@@ -145,15 +157,21 @@ namespace Infrastructure_File {
 
 }
 
-
+TagDictionary "1" *-- "*" Tag
+TagDictionary "1" *-- "*" TagInfo
 
 MainWindowViewModel *-- IDialogMessageService
 MainWindowViewModel *-- IFilePickerService
-MainWindowViewModel "1" o-- "*" DicomDataEntity
+MainWindowViewModel "1" *-- "*" TagListElement
+MainWindowViewModel "1" *-- "*" DicomListElement
+
 MainWindowViewModel --> IDicomDataRepository
 MainWindowViewModel --> IImageConverterFactory
 MainWindowViewModel --> IImageConverter
-MainWindowViewModel --> IDicomDataRepository
+
+DicomListElement "1" *-- "1" DicomDataEntity
+TagListElement "1" *-- "1" ValueElement
+TagListElement --> TagDictionary
 
 IDicomDataRepository <|.. DicomDataFileIO
 
@@ -167,6 +185,7 @@ IImageConverterFactory --> IImageConverter : create
 　IFilePickerService　　<|.. FilePickerService
 
 ValueObject <|-- Tag
+ValueObject <|-- TagInfo
 ValueObject <|-- PhotometricInterpretation
 ValueObject <|-- TransferSyntax
 
