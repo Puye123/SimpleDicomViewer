@@ -18,15 +18,17 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5"/> <!--Splitter-->
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="3*"/>
+            <RowDefinition Height="5"/> <!--Splitter-->
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Border BorderBrush="Black" BorderThickness="0,0,0,1" Grid.Row="0" Grid.ColumnSpan="2">
+        <Border BorderBrush="DarkSlateGray" BorderThickness="0,0,0,1" Grid.Row="0" Grid.ColumnSpan="3">
             <MenuBar >
                 <MenuBarItem Title="ファイル">
                     <MenuFlyoutItem Text="DICOMファイル(.dcm)を開く..." Icon="OpenFile" Command="{x:Bind ViewModel.AddFileCommand }"/>
@@ -42,7 +44,8 @@
             </MenuBar>
         </Border>
 
-        <Border BorderBrush="Black" BorderThickness="1,0,1,1" Grid.Row="1" Grid.RowSpan="2" Grid.Column="0">
+        <controls:GridSplitter Grid.Row="1" Grid.RowSpan="3" Grid.Column="1" />
+        <Border BorderBrush="DarkSlateGray" BorderThickness="1,0,1,1" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0">
             <ListView SelectionMode="Single" ItemsSource="{x:Bind ViewModel.DicomListElements}"
                   SelectedItem="{x:Bind ViewModel.SelectedDicomListElement, Mode=TwoWay}">
                 <ListView.ItemTemplate>
@@ -101,11 +104,14 @@
             </ListView>
 
         </Border>
-        <Border BorderBrush="Black" BorderThickness="0,0,1,0" Grid.Row="1" Grid.Column="1">
+
+        <Border BorderBrush="DarkSlateGray" BorderThickness="1,0,1,1" Grid.Row="1" Grid.Column="2">
             <Image Source="{x:Bind Path=ViewModel.ShowFilePath, Mode=OneWay, FallbackValue='/Assets/lena.jpg'}"/>
         </Border>
+        
+        <controls:GridSplitter Grid.Row="2" Grid.Column="2"/>
 
-        <Border BorderBrush="Black" BorderThickness="0,1,1,1" Grid.Row="2" Grid.Column="1">
+        <Border BorderBrush="DarkSlateGray" BorderThickness="1,1,1,1" Grid.Row="3" Grid.Column="2">
             <controls:DataGrid ItemsSource="{x:Bind ViewModel.TagListElements }" />
         </Border>
     </Grid>
