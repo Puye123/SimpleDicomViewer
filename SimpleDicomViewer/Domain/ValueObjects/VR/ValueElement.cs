@@ -1,6 +1,9 @@
 ﻿using SimpleDicomViewer.Domain.Exceptions;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace SimpleDicomViewer.Domain.ValueObjects.VR
 {
@@ -27,9 +30,14 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
         public byte[] Value { get; }
 
         /// <summary>
+        /// 多重値だったときに各々の値を格納するリスト
+        /// </summary>
+        private List<byte[]> ValueList { get; set; } = new List<byte[]>();
+
+        /// <summary>
         /// 値の型
         /// </summary>
-        public Type ValueType { get; }
+        public Type ValueType { get; private set; }
 
         public string VRName { get; }
 
@@ -54,11 +62,40 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
 
             try
             {
-                // ワークアラウンド
-                // 多重値(バックスラッシュ)は値チェックしない
+                // 多重値(バックスラッシュ区切り) 
                 if (Array.Exists(value, x => x == 0x5c))
                 {
                     Value = value;
+
+                    List<byte> currentList = new List<byte>();
+                    foreach (var v in value)
+                    {
+                        if (v == 0x5c)
+                        {
+                            if (currentList.Count > 0)
+                            {
+                                ValueList.Add(currentList.ToArray());
+                                currentList = new List<byte>();
+                            }
+                        }
+                        else
+                        {
+                            currentList.Add(v);
+                        }
+                    }
+                    if (currentList.Count > 0)
+                    {
+                        ValueList.Add(currentList.ToArray());
+                    }
+                    return;
+                }
+                // 多重値(区切り文字なし)
+                if (value.Length > length && isFixedValue == true && value.Length % length == 0)
+                {
+                    for (int i = 0; i < value.Length; i += (int)length)
+                    {
+                        ValueList.Add(new List<byte>(value.Skip(i).Take((int)length)).ToArray());
+                    }
                     return;
                 }
 
@@ -98,14 +135,29 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             }
             if (ValueType == typeof(string))
             {
+                if (ValueList.Count > 0)
+                {
+                    ValueType = typeof(string[]);
+                    return ValueList.ConvertAll(x => System.Text.Encoding.ASCII.GetString(x)).ToArray();
+                }
                 return System.Text.Encoding.ASCII.GetString(Value);
             }
             if (ValueType == typeof(float))
             {
+                if (ValueList.Count > 0)
+                {
+                    ValueType = typeof(float[]);
+                    return ValueList.ConvertAll(x => BitConverter.ToSingle(x)).ToArray();
+                }
                 return BitConverter.ToSingle(Value);
             }
             if (ValueType == typeof(double))
             {
+                if (ValueList.Count > 0)
+                {
+                    ValueType = typeof(double[]);
+                    return ValueList.ConvertAll(x => BitConverter.ToDouble(x)).ToArray();
+                }
                 return BitConverter.ToDouble(Value);
             }
             if (ValueType == typeof(byte[]))
@@ -114,18 +166,38 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             }
             if (ValueType == typeof(int))
             {
+                if (ValueList.Count > 0)
+                {
+                    ValueType = typeof(int[]);
+                    return ValueList.ConvertAll(x => BitConverter.ToInt32(x)).ToArray();
+                }
                 return BitConverter.ToInt32(Value);
             }
             if (ValueType == typeof(short))
             {
+                if (ValueList.Count > 0)
+                {
+                    ValueType = typeof(short[]);
+                    return ValueList.ConvertAll(x => BitConverter.ToInt16(x)).ToArray();
+                }
                 return BitConverter.ToInt16(Value);
             }
             if (ValueType == typeof(uint))
             {
+                if (ValueList.Count > 0)
+                {
+                    ValueType = typeof(uint[]);
+                    return ValueList.ConvertAll(x => BitConverter.ToUInt32(x)).ToArray();
+                }
                 return BitConverter.ToUInt32(Value);
             }
             if (ValueType == typeof(ushort))
             {
+                if (ValueList.Count > 0)
+                {
+                    ValueType = typeof(ushort[]);
+                    return ValueList.ConvertAll(x => BitConverter.ToUInt16(x)).ToArray();
+                }
                 return BitConverter.ToUInt16(Value);
             }
             if (ValueType == typeof(Tag))
