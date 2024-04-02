@@ -31,21 +31,24 @@ namespace SimpleDicomViewer.ViewModels
             var tagInfo = dict.Search(valueElement.Tag);
             name = tagInfo.Description;
             length = valueElement.Value?.Length;
-            object obj = valueElement.GetValueObject();
+            var obj = valueElement.GetValueObject();
             if (valueElement.ValueType.IsArray && valueElement.ValueType != typeof(byte[])) {
-                object[] objAsArray = (object[])obj;
-                string str = "[";
-                
-                for( int i = 0; i < objAsArray.Length; ++i)
+                //object[] objAsArray = (object[])obj;
+                if (obj is Array objAsArray)
                 {
-                    str += objAsArray[i].ToString();
-                    if (i != objAsArray.Length - 1)
+                    string str = "[";
+
+                    for (int i = 0; i < objAsArray.Length; ++i)
                     {
-                        str += ", ";
+                        str += objAsArray.GetValue(i).ToString();
+                        if (i != objAsArray.Length - 1)
+                        {
+                            str += ", ";
+                        }
                     }
-                }
-                str += "]";
-                data = str;
+                    str += "]";
+                    data = str;
+                }                
             }
             else if (valueElement.ValueType == typeof(byte[]))
             {

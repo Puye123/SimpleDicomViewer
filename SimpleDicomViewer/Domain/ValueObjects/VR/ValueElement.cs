@@ -37,7 +37,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
         /// <summary>
         /// 値の型
         /// </summary>
-        public Type ValueType { get; private set; }
+        public Type ValueType { get;}
 
         public string VRName { get; }
 
@@ -62,8 +62,8 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
 
             try
             {
-                // 多重値(バックスラッシュ区切り) 
-                if (Array.Exists(value, x => x == 0x5c))
+                // 多重値(バックスラッシュ区切り)  画像データはのぞく
+                if (Array.Exists(value, x => x == 0x5c) && Tag != new Tag(0x7fe0, 0x0010))
                 {
                     Value = value;
 
@@ -87,15 +87,19 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
                     {
                         ValueList.Add(currentList.ToArray());
                     }
+                    ValueType = ValueType.MakeArrayType(); // 型名情報を配列型に変換
                     return;
                 }
                 // 多重値(区切り文字なし)
                 if (value.Length > length && isFixedValue == true && value.Length % length == 0)
                 {
+                    Value = value;
+
                     for (int i = 0; i < value.Length; i += (int)length)
                     {
                         ValueList.Add(new List<byte>(value.Skip(i).Take((int)length)).ToArray());
                     }
+                    ValueType = ValueType.MakeArrayType(); // 型名情報を配列型に変換
                     return;
                 }
 
@@ -135,30 +139,27 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             }
             if (ValueType == typeof(string))
             {
-                if (ValueList.Count > 0)
-                {
-                    ValueType = typeof(string[]);
-                    return ValueList.ConvertAll(x => System.Text.Encoding.ASCII.GetString(x)).ToArray();
-                }
                 return System.Text.Encoding.ASCII.GetString(Value);
+            }
+            if (ValueType == typeof(string[]))
+            {
+                return ValueList.ConvertAll(x => System.Text.Encoding.ASCII.GetString(x)).ToArray();
             }
             if (ValueType == typeof(float))
             {
-                if (ValueList.Count > 0)
-                {
-                    ValueType = typeof(float[]);
-                    return ValueList.ConvertAll(x => BitConverter.ToSingle(x)).ToArray();
-                }
                 return BitConverter.ToSingle(Value);
+            }
+            if (ValueType == typeof(float[]))
+            {
+                return ValueList.ConvertAll(x => BitConverter.ToSingle(x)).ToArray();
             }
             if (ValueType == typeof(double))
             {
-                if (ValueList.Count > 0)
-                {
-                    ValueType = typeof(double[]);
-                    return ValueList.ConvertAll(x => BitConverter.ToDouble(x)).ToArray();
-                }
                 return BitConverter.ToDouble(Value);
+            }
+            if (ValueType == typeof(double[]))
+            {
+                return ValueList.ConvertAll(x => BitConverter.ToDouble(x)).ToArray();
             }
             if (ValueType == typeof(byte[]))
             {
@@ -166,39 +167,35 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             }
             if (ValueType == typeof(int))
             {
-                if (ValueList.Count > 0)
-                {
-                    ValueType = typeof(int[]);
-                    return ValueList.ConvertAll(x => BitConverter.ToInt32(x)).ToArray();
-                }
                 return BitConverter.ToInt32(Value);
+            }
+            if (ValueType == typeof(int[]))
+            {
+                return ValueList.ConvertAll(x => BitConverter.ToInt32(x)).ToArray();
             }
             if (ValueType == typeof(short))
             {
-                if (ValueList.Count > 0)
-                {
-                    ValueType = typeof(short[]);
-                    return ValueList.ConvertAll(x => BitConverter.ToInt16(x)).ToArray();
-                }
                 return BitConverter.ToInt16(Value);
+            }
+            if (ValueType == typeof(short[]))
+            {
+                return ValueList.ConvertAll(x => BitConverter.ToInt16(x)).ToArray();
             }
             if (ValueType == typeof(uint))
             {
-                if (ValueList.Count > 0)
-                {
-                    ValueType = typeof(uint[]);
-                    return ValueList.ConvertAll(x => BitConverter.ToUInt32(x)).ToArray();
-                }
                 return BitConverter.ToUInt32(Value);
+            }
+            if (ValueType == typeof(uint[]))
+            {
+                return ValueList.ConvertAll(x => BitConverter.ToUInt32(x)).ToArray();
             }
             if (ValueType == typeof(ushort))
             {
-                if (ValueList.Count > 0)
-                {
-                    ValueType = typeof(ushort[]);
-                    return ValueList.ConvertAll(x => BitConverter.ToUInt16(x)).ToArray();
-                }
                 return BitConverter.ToUInt16(Value);
+            }
+            if (ValueType == typeof(ushort[]))
+            {
+                return ValueList.ConvertAll(x => BitConverter.ToUInt16(x)).ToArray();
             }
             if (ValueType == typeof(Tag))
             {
@@ -209,7 +206,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
             }
             else
             {
-                throw new NotImplementedException();
+                throw new NotImplementedException($"未定義の型です : {ValueType}");
             }
         }
 
