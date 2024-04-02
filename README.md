@@ -9,7 +9,10 @@ DICOMビュワーアプリです。
 ※ 2024/04/02 時点のものです
 
 
-https://github.com/Puye123/SimpleDicomViewer/assets/32557553/00680410-c33b-410c-9cd0-0d8265e9bf39
+
+
+https://github.com/Puye123/SimpleDicomViewer/assets/32557553/af570fce-89ef-4128-9cf5-8afee282672a
+
 
 
 
