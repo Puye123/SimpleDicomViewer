@@ -36,7 +36,7 @@ namespace SimpleDicomViewer.ViewModels
         //[ObservableProperty]
         //public BitmapImage bitmapImage;
         [ObservableProperty]
-        public string showFilePath = "/Assets/lena.jpg";
+        public string showFilePath = "/Assets/no_image_square.jpg";
 
         private DicomListElement _selectedDicomListElement;
         public DicomListElement SelectedDicomListElement

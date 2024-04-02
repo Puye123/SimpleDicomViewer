@@ -14,6 +14,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\lena.jpg" />
+    <Content Remove="Assets\no_image_square.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Views\MainPage.xaml" />
@@ -48,6 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Update="Assets\lena.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Assets\no_image_square.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Update="Views\MainPage.xaml">

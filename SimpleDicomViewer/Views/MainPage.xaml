@@ -106,7 +106,7 @@
         </Border>
 
         <Border BorderBrush="DarkSlateGray" BorderThickness="1,0,1,1" Grid.Row="1" Grid.Column="2">
-            <Image Source="{x:Bind Path=ViewModel.ShowFilePath, Mode=OneWay, FallbackValue='/Assets/lena.jpg'}"/>
+            <Image Source="{x:Bind Path=ViewModel.ShowFilePath, Mode=OneWay, FallbackValue='/Assets/no_image_square.jpg'}"/>
         </Border>
         
         <controls:GridSplitter Grid.Row="2" Grid.Column="2"/>
