@@ -35,9 +35,10 @@ https://github.com/Puye123/SimpleDicomViewer/assets/32557553/4783a140-d4ed-43a0-
 * 選択したDICOMデータのタグ一覧表示
 * 画像データの表示（非圧縮）
 * DICOM辞書の実装およびタグ名の表示
+* フォルダ単位でのDICOMデータ読み込み
 
 ## Not Implemented
-* フォルダ単位でのDICOMデータ読み込み
+* ``Window Center``(0028, 1050) と ``Window Width``(0028, 1051) を用いた画面表示用コントラスト調整
 * 画像データの表示 (ランレングス圧縮)
 * 画像データの表示 (JPEG圧縮)
 * 画像の保存機能 (BMP)
