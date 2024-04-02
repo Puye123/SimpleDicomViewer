@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
 using SimpleDicomViewer.CommonServices;
 using SimpleDicomViewer.Domain.Services.ImageConverter;
@@ -142,9 +143,9 @@ namespace SimpleDicomViewer.ViewModels
         }
 
         [RelayCommand]
-        private async Task Exit()
+        private void Exit()
         {
-            await DialogMessage.ShowDialogMessageAsync("[未実装] アプリの終了", "test test");
+            Application.Current.Exit();
         }
 
         [RelayCommand]
