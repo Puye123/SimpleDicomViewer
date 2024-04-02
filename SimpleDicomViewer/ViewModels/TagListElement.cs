@@ -21,6 +21,9 @@ namespace SimpleDicomViewer.ViewModels
         [ObservableProperty]
         string? data;
 
+        [ObservableProperty]
+        string? _RAWData;
+
         public ValueElement ValueElement { get; }
 
         public TagListElement(ValueElement valueElement)
@@ -50,22 +53,19 @@ namespace SimpleDicomViewer.ViewModels
                     data = str;
                 }                
             }
-            else if (valueElement.ValueType == typeof(byte[]))
-            {
-                var byteArray = (byte[])valueElement.GetValueObject();
-                if (byteArray.Length < 30)
-                {
-                    data = BitConverter.ToString(byteArray);
-                }
-                else
-                {
-                    data = BitConverter.ToString(byteArray.Take(30).ToArray()) + " ...";
-                }
-            }
             else
             {
                 data = valueElement.GetValueObject().ToString();
             }
+
+            if (valueElement.Value.Length < 30)
+            {
+                _RAWData = BitConverter.ToString(valueElement.Value);
+            }
+            else
+            {
+                _RAWData = BitConverter.ToString(valueElement.Value.Take(30).ToArray()) + " ...";
+            } 
         }
     }
 }
