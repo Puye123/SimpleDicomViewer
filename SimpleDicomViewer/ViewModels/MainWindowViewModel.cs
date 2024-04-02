@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -116,7 +117,22 @@ namespace SimpleDicomViewer.ViewModels
         private async Task AddFolder()
         {
             var folderPath = await FilePickerService.FolderPickAsync();
-            await DialogMessage.ShowDialogMessageAsync("[未実装] フォルダの追加", folderPath);
+            string[] filePaths = Directory.GetFiles(folderPath);
+            foreach (string filePath in filePaths)
+            {
+                try
+                {
+                    var fileIO = new Infrastructure.File.DicomDataFileIO();
+                    var dicomData = fileIO.Read(filePath);
+
+                    DicomListElements.Add(new DicomListElement(dicomData));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
+            }
+
         }
 
         [RelayCommand]

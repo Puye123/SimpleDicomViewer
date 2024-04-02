@@ -12,7 +12,7 @@ namespace SimpleDicomViewer.Domain.ValueObjects.VR
     /// </remarks>
     public class SequenceDelimitationItemValue : ValueElement
     {
-        public SequenceDelimitationItemValue(string vr, Tag tag) : base(vr, tag, value : Array.Empty<byte>(), length : 0, isFixedValue : false, valueType : typeof(byte[]))
+        public SequenceDelimitationItemValue(string vr, Tag tag) : base(vr, tag, value : Array.Empty<byte>(), length : 0, isFixedValue : false, valueType : typeof(string))
         {
         }
 
