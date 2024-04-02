@@ -41,3 +41,8 @@ This software uses the following third-party libraries:
 - **Copyright**: shimat
 
 --- 
+
+Other citations include:
+## [いらすとや](https://www.irasutoya.com/) より画像を引用
+### ``no_image_square.jpg``
+- **URL** https://www.irasutoya.com/2020/04/no-image.html
