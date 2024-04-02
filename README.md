@@ -6,15 +6,17 @@ DICOMビュワーアプリです。
 > このDICOMビュワーは医療用ではありません。
 
 # DEMO
-※ 2024/04/01 時点のものです
+※ 2024/04/02 時点のものです
 
 
-
-https://github.com/Puye123/SimpleDicomViewer/assets/32557553/63c67cbc-26bc-4619-8daf-429bbdeaf25b
+https://github.com/Puye123/SimpleDicomViewer/assets/32557553/00680410-c33b-410c-9cd0-0d8265e9bf39
 
 
 
 ## Old
+※ 2024/04/01 時点のものです  
+https://github.com/Puye123/SimpleDicomViewer/assets/32557553/63c67cbc-26bc-4619-8daf-429bbdeaf25b
+
 ※ 2024/03/29 時点のものです  
 https://github.com/Puye123/SimpleDicomViewer/assets/32557553/25e1abb5-d06d-4aba-8b93-78a48185a1cd
 
